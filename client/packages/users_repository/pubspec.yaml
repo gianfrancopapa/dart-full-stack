@@ -1,0 +1,15 @@
+name: users_repository
+description: UsersRepository pure dart package.
+version: 0.0.1+1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  users_api:
+    path: ../../../server
+
+dev_dependencies:
+  test: ^1.19.2
+  flutter_lints: ^1.0.0

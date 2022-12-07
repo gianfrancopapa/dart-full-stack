@@ -1,0 +1,20 @@
+name: users_api
+description: A Rest API using Dart Frog
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  dart_frog: ^0.3.0
+  equatable: ^2.0.5
+  http: ^0.13.5
+  json_annotation: ^4.7.0
+
+dev_dependencies:
+  build_runner: ^2.3.2
+  json_serializable: ^6.5.4
+  mocktail: ^0.3.0
+  test: ^1.19.2
+  very_good_analysis: ^3.1.0
