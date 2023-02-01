@@ -24,7 +24,7 @@ class UsersRoute extends StatelessWidget {
     return BlocProvider(
       create: (_) => UsersBloc(
         usersRepository: context.read<UsersRepository>(),
-      )..add(UsersFetched()),
+      ),
       child: const UsersView(),
     );
   }

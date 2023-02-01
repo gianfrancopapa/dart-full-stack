@@ -1,4 +1,5 @@
 import 'package:users_api/api.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 abstract class UsersRepositoryException implements Exception {
   /// {@macro users_repository_exception}
@@ -21,22 +22,16 @@ class GetUsersFailure extends UsersRepositoryException {
 }
 
 class UsersRepository {
-  const UsersRepository({
+  UsersRepository({
     required ApiClient apiClient,
   }) : _apiClient = apiClient;
 
   final ApiClient _apiClient;
 
-  Future<List<User>> getUsers() async {
-    try {
-      final response = await _apiClient.getUsers();
-      final users = <User>[];
-      for (final user in response['users'] ?? []) {
-        users.add(User.fromJson(user));
-      }
-      return users;
-    } catch (error, stackTrace) {
-      throw GetUsersFailure(error, stackTrace);
-    }
+  Stream getUsers() async* {
+    final uri = Uri.parse('ws://localhost:8080/api/v1/users/ws');
+    final channel = WebSocketChannel.connect(uri);
+
+    yield channel.stream;
   }
 }
