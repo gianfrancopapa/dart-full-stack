@@ -1,43 +1,38 @@
-import 'dart:convert';
-
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_web_socket/dart_frog_web_socket.dart';
-import 'package:users_api/api.dart';
-
-final users = [
-  const User(id: '1', name: 'Gianfranco', email: 'gianfranco@email.com'),
-  const User(id: '2', name: 'Gianfranco2', email: 'gianfranco@email.com'),
-  const User(id: '3', name: 'Gianfranco3', email: 'gianfranco@email.com'),
-];
-
-final clients = <WebSocketChannel>[];
+import 'package:users_api/src/users/bloc/users_bloc.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   final handler = webSocketHandler(
     (channel, protocol) {
-      // Add client to our client list
-      clients.add(channel);
+      // A new client has connected to our server.
+      // Subscribe the new client to receive notifications
+      // whenever the cubit state changes.
+      final bloc = context.read<UsersBloc>()..subscribe(channel);
 
-      // Send a message to the client.
-      channel.sink.add(jsonEncode(users));
+      // Send the current users to the new client.
+      channel.sink.add(bloc.state.users.toString());
 
       // Listen for messages from the client.
       channel.stream.listen(
-        (message) {
-          final nextId = (users.length + 1).toString();
-          users.add(
-            User(
-              id: nextId,
-              name: 'Gianfranco$nextId',
-              email: 'gianfranco@email.com',
-            ),
-          );
-          for (final client in clients) {
-            client.sink.add(jsonEncode(users));
+        (event) {
+          switch (event) {
+            // Handle an increment message.
+            case '__addUser__':
+              bloc.add(const UserCreated(name: 'Test'));
+              break;
+            // Handle a decrement message.
+            case '__removeUser__':
+              bloc.add(const UserDeleted(id: 'Test'));
+              break;
+            // Ignore any other messages.
+            default:
+              break;
           }
         },
         // The client has disconnected.
-        onDone: () => clients.remove(channel),
+        // Unsubscribe the channel.
+        onDone: () => bloc.unsubscribe(channel),
       );
     },
   );
