@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:broadcast_bloc/broadcast_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:users_api/api.dart';

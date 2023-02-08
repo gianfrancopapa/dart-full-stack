@@ -11,7 +11,7 @@ Future<Response> onRequest(RequestContext context) async {
       final bloc = context.read<UsersBloc>()..subscribe(channel);
 
       // Send the current users to the new client.
-      channel.sink.add(bloc.state.users.toString());
+      channel.sink.add(bloc.state.toString());
 
       // Listen for messages from the client.
       channel.stream.listen(

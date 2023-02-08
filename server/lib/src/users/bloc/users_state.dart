@@ -30,7 +30,8 @@ class UsersState extends Equatable {
 
   @override
   String toString() {
-    final newUsers = users.map((user) => user.toJson());
+    final newUsers =
+        users.map((user) => jsonEncode(user.toJson())).toList();
     return newUsers.toString();
   }
 }
