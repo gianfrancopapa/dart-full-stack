@@ -23,7 +23,7 @@ Future<Response> onRequest(RequestContext context) async {
               break;
             // Handle a decrement message.
             case '__removeUser__':
-              bloc.add(const UserDeleted(id: 'Test'));
+              bloc.add(const UserDeleted(id: 1));
               break;
             // Ignore any other messages.
             default:
