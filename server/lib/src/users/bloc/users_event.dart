@@ -16,7 +16,7 @@ class UserCreated extends UsersEvent {
 class UserDeleted extends UsersEvent {
   const UserDeleted({required this.id});
 
-  final String id;
+  final int id;
 
   @override
   List<Object?> get props => [id];

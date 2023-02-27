@@ -7,11 +7,11 @@ import 'package:users_api/src/data/users_data_source.dart';
 class InMemoryUsersDataSource extends UsersDataSource {
   /// In memory [User] list
   final List<User> users = const [
-    User(id: '1', name: 'Gianfranco', email: 'gianfranco@email.com'),
-    User(id: '2', name: 'Gianfranco2', email: 'gianfranco@email.com'),
-    User(id: '3', name: 'Gianfranco3', email: 'gianfranco@email.com'),
-    User(id: '4', name: 'Gianfranco4', email: 'gianfranco@email.com'),
-    User(id: '5', name: 'Gianfranco5', email: 'gianfranco@email.com'),
+    User(id: 1, name: 'Gianfranco', email: 'gianfranco@email.com'),
+    User(id: 2, name: 'Gianfranco2', email: 'gianfranco@email.com'),
+    User(id: 3, name: 'Gianfranco3', email: 'gianfranco@email.com'),
+    User(id: 4, name: 'Gianfranco4', email: 'gianfranco@email.com'),
+    User(id: 5, name: 'Gianfranco5', email: 'gianfranco@email.com'),
   ];
 
   @override

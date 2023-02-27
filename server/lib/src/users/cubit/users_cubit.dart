@@ -9,7 +9,7 @@ class UsersCubit extends BroadcastCubit<List<User>> {
   /// Add user to the the current state.
   void addUser(String name) {
     final users = List<User>.from(state);
-    final user = User(id: name, name: name, email: name);
+    final user = User(id: 1, name: name, email: name);
     users.add(user);
     emit(users);
   }
@@ -19,5 +19,4 @@ class UsersCubit extends BroadcastCubit<List<User>> {
     final users = state.where((user) => user.name != name).toList();
     emit(users);
   }
-
 }

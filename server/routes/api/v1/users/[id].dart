@@ -14,10 +14,15 @@ Future<Response> onRequest(RequestContext context, String id) async {
 
 Future<Response> _onGetRequest(RequestContext context, String id) async {
   final userDataSource = context.read<UsersDataSource>();
-
-  final user = await userDataSource.getUserById(id: id);
-
-  return Response.json(
-    body: user,
-  );
+  try {
+    final user = await userDataSource.getUserById(id: id);
+    return Response.json(
+      body: user,
+    );
+  } catch (error) {
+    return Response(
+      statusCode: HttpStatus.notFound,
+      body: 'User with id $id not found',
+    );
+  }
 }

@@ -16,13 +16,13 @@ class User extends Equatable {
   });
 
   /// An instance of an empty [User]
-  const User.empty() : this(id: '', name: '', email: '');
+  const User.empty() : this(id: 1, name: '', email: '');
 
   /// Deserializes the given `Map<String, dynamic>` into a [User].
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// User identifier
-  final String id;
+  final int id;
 
   /// User name
   final String name;
@@ -35,7 +35,7 @@ class User extends Equatable {
 
   /// Returns a copy of a [User] using the given values
   User copyWith({
-    String? id,
+    int? id,
     String? name,
     String? email,
   }) =>

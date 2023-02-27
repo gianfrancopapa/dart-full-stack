@@ -23,7 +23,7 @@ class UsersBloc extends BroadcastBloc<UsersEvent, UsersState> {
     final users = List<User>.from(state.users);
     final name = event.name;
     final user = User(
-      id: users.length.toString(),
+      id: users.length,
       name: name,
       email: name,
     );
