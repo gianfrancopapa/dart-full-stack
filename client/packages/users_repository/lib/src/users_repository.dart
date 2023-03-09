@@ -28,7 +28,7 @@ class UsersRepository {
     required WebSocketChannel webSocketChannel,
   }) : _webSocketChannel = webSocketChannel;
 
-  late final WebSocketChannel _webSocketChannel;
+  final WebSocketChannel _webSocketChannel;
 
   Stream<List<User>> users() async* {
     await for (var message in _webSocketChannel.stream) {
@@ -37,9 +37,5 @@ class UsersRepository {
 
       yield* Stream.value(users);
     }
-  }
-
-  void dispose() {
-    _webSocketChannel.sink.close();
   }
 }
