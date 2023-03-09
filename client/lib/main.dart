@@ -2,15 +2,19 @@ import 'package:app/bootstrap.dart';
 import 'package:app/users/view/users_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:users_api/api.dart';
 import 'package:users_repository/users_repository.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() {
   bootstrap(() async {
     const baseUrl = String.fromEnvironment('API_URL');
-    final apiClient = ApiClient(baseUrl: baseUrl);
 
-    final usersRepository = UsersRepository(apiClient: apiClient);
+    final uri = Uri.parse('$baseUrl/api/v1/users/ws');
+    final channel = WebSocketChannel.connect(uri);
+
+    final usersRepository = UsersRepository(
+      webSocketChannel: channel,
+    );
 
     return App(
       usersRepository: usersRepository,

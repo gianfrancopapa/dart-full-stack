@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:users_api/api.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -23,15 +25,21 @@ class GetUsersFailure extends UsersRepositoryException {
 
 class UsersRepository {
   UsersRepository({
-    required ApiClient apiClient,
-  }) : _apiClient = apiClient;
+    required WebSocketChannel webSocketChannel,
+  }) : _webSocketChannel = webSocketChannel;
 
-  final ApiClient _apiClient;
+  late final WebSocketChannel _webSocketChannel;
 
-  Stream getUsers() async* {
-    final uri = Uri.parse('ws://localhost:8080/api/v1/users/ws');
-    final channel = WebSocketChannel.connect(uri);
+  Stream<List<User>> users() async* {
+    await for (var message in _webSocketChannel.stream) {
+      final encodedUsers = jsonDecode(message) as List<dynamic>;
+      final users = encodedUsers.map((user) => User.fromJson(user)).toList();
 
-    yield channel.stream;
+      yield* Stream.value(users);
+    }
+  }
+
+  void dispose() {
+    _webSocketChannel.sink.close();
   }
 }
